@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
 
 namespace RockPaperScissors
 {
-    public partial class Form1 : Form
+    public partial class MainUI : Form
     {
         private string userChoice;
         private string comChoice;
@@ -19,29 +14,14 @@ namespace RockPaperScissors
         private int comWins = 0;
         private int draws = 0;
 
-        public Form1()
+        public MainUI()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainUI_Load(object sender, EventArgs e)
         {
-            lblUser.Text = userWins.ToString();
-            lblCom.Text = comWins.ToString();
-            lblDraw.Text = draws.ToString();
-
-            try
-            {
-                userBox.Image = Image.FromFile("../Pics/rpstriangle.jpg");
-                comBox.Image = Image.FromFile("../Pics/rpstriangle.jpg");
-                userBox.Visible = true;
-                comBox.Visible = true;
-            }
-            catch (FileNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message, "File Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            InitializeGame();
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -72,10 +52,15 @@ namespace RockPaperScissors
                 replay.StartPosition = FormStartPosition.Manual;
                 replay.Location = new Point(800, 175);
                 replay.ShowDialog(this);
+
                 if (replay.DialogResult == DialogResult.OK)
+                {
                     btnPlay.PerformClick();
+                }
                 else
+                {
                     replay.Close();
+                }
             }
         }
 
@@ -140,8 +125,8 @@ namespace RockPaperScissors
 
             try
             {
-                userBox.Image = Image.FromFile("../Pics/" + user + ".jpg");
-                comBox.Image = Image.FromFile("../Pics/" + com + ".jpg");
+                userBox.Image = Image.FromFile("../img/" + user + ".jpg");
+                comBox.Image = Image.FromFile("../img/" + com + ".jpg");
             }
             catch (FileNotFoundException ex)
             {
@@ -156,30 +141,35 @@ namespace RockPaperScissors
             return outcome;
         }
 
+        private void InitializeGame()
+        {
+            userWins = 0;
+            comWins = 0;
+            draws = 0;
+            lblUser.Text = userWins.ToString();
+            lblCom.Text = comWins.ToString();
+            lblDraw.Text = draws.ToString();
+
+            try
+            {
+                userBox.Image = Image.FromFile("../img/rpstriangle.jpg");
+                comBox.Image = Image.FromFile("../img/rpstriangle.jpg");
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message, "File Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnReset_Click(object sender, EventArgs e)
         {
-             userWins = 0;
-             comWins = 0;
-             draws = 0;
-             lblUser.Text = userWins.ToString();
-             lblCom.Text = comWins.ToString();
-             lblDraw.Text = draws.ToString();
-
-             try
-             {
-                 userBox.Image = Image.FromFile("../Pics/rpstriangle.jpg");
-                 comBox.Image = Image.FromFile("../Pics/rpstriangle.jpg");
-             }
-             catch (FileNotFoundException ex)
-             {
-                 MessageBox.Show(ex.Message, "File Error",
-                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-             }
+            InitializeGame();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace RockPaperScissors
 {
-    partial class Form1
+    partial class MainUI
     {
         /// <summary>
         /// Required designer variable.
@@ -214,7 +214,7 @@
             this.Controls.Add(this.lblSelection);
             this.Name = "Form1";
             this.Text = "Rock, Paper, Scissors";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.MainUI_Load);
             ((System.ComponentModel.ISupportInitialize)(this.userBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comBox)).EndInit();
             this.ResumeLayout(false);
