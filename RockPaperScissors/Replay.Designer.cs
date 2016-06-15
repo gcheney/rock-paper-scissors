@@ -1,6 +1,6 @@
 ﻿namespace RockPaperScissors
 {
-    partial class frmReplay
+    partial class Replay
     {
         /// <summary>
         /// Required designer variable.
@@ -86,7 +86,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblResult);
             this.Name = "frmReplay";
-            this.Text = "Form3";
+            this.Text = "Play Again?";
             this.ResumeLayout(false);
             this.PerformLayout();
 

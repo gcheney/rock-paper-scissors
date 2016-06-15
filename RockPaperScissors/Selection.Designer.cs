@@ -1,6 +1,6 @@
 ﻿namespace RockPaperScissors
 {
-    partial class frmDialog
+    partial class Selection
     {
         /// <summary>
         /// Required designer variable.
@@ -32,8 +32,8 @@
             this.btnRock = new System.Windows.Forms.Button();
             this.btnPaper = new System.Windows.Forms.Button();
             this.btnScissors = new System.Windows.Forms.Button();
-            this.selectionPicture = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.selectionPicture)).BeginInit();
+            this.backgroundImage = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.backgroundImage)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -84,25 +84,25 @@
             // 
             // selectionPicture
             // 
-            this.selectionPicture.Location = new System.Drawing.Point(12, 76);
-            this.selectionPicture.Name = "selectionPicture";
-            this.selectionPicture.Size = new System.Drawing.Size(369, 220);
-            this.selectionPicture.TabIndex = 4;
-            this.selectionPicture.TabStop = false;
+            this.backgroundImage.Location = new System.Drawing.Point(12, 76);
+            this.backgroundImage.Name = "selectionPicture";
+            this.backgroundImage.Size = new System.Drawing.Size(369, 220);
+            this.backgroundImage.TabIndex = 4;
+            this.backgroundImage.TabStop = false;
             // 
             // frmDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(392, 359);
-            this.Controls.Add(this.selectionPicture);
+            this.Controls.Add(this.backgroundImage);
             this.Controls.Add(this.btnScissors);
             this.Controls.Add(this.btnPaper);
             this.Controls.Add(this.btnRock);
             this.Controls.Add(this.label1);
             this.Name = "frmDialog";
-            this.Text = "Form2";
-            ((System.ComponentModel.ISupportInitialize)(this.selectionPicture)).EndInit();
+            this.Text = "Make Your Selection";
+            ((System.ComponentModel.ISupportInitialize)(this.backgroundImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,6 +114,6 @@
         private System.Windows.Forms.Button btnRock;
         private System.Windows.Forms.Button btnPaper;
         private System.Windows.Forms.Button btnScissors;
-        private System.Windows.Forms.PictureBox selectionPicture;
+        private System.Windows.Forms.PictureBox backgroundImage;
     }
 }

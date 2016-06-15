@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Windows.Forms;
 
 namespace RockPaperScissors
 {
-    public partial class frmDialog : Form
+    public partial class Selection : Form
     {
         private string selection;
 
-        public frmDialog()
+        public Selection()
         {
             InitializeComponent();
-            selectionPicture.Image = Image.FromFile("../Pics/rock-paper-scissors-logo.jpg");
-            selectionPicture.Visible = true;
+            string dir = Path.GetDirectoryName(Application.ExecutablePath);
+            string fileName = Path.Combine(dir, @"img\rock-paper-scissors-logo.jpg");
+            backgroundImage.Image = Image.FromFile(fileName);
+            backgroundImage.Visible = true;
         }
 
         private void btnRock_Click(object sender, EventArgs e)
