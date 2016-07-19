@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace RockPaperScissors
@@ -12,9 +13,13 @@ namespace RockPaperScissors
         public Selection()
         {
             InitializeComponent();
-            string dir = Path.GetDirectoryName(Application.ExecutablePath);
-            string fileName = Path.Combine(dir, @"img\rock-paper-scissors-logo.jpg");
-            backgroundImage.Image = Image.FromFile(fileName);
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string imagePath = "RockPaperScissors.Resources.rock-paper-scissors-logo.jpg";
+            Stream stream = assembly.GetManifestResourceStream(imagePath);
+            Bitmap logoImage = new Bitmap(stream);
+
+            backgroundImage.Image = logoImage;
             backgroundImage.Visible = true;
         }
 
