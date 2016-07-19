@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
@@ -11,11 +12,9 @@ namespace RockPaperScissors
     /// </summary>
     public partial class MainUI : Form
     {
-        private string userChoice;
-        private string comChoice;
-        private int userWins = 0;
-        private int comWins = 0;
-        private int draws = 0;
+        private int _userWins = 0;
+        private int _comWins = 0;
+        private int _draws = 0;
 
         public MainUI()
         {
@@ -45,17 +44,17 @@ namespace RockPaperScissors
                 if (user.Equals("Rock"))
                 {
                     outcome = "You got a draw!";
-                    draws++;
+                    _draws++;
                 }
                 else if (user.Equals("Paper"))
                 {
                     outcome = "Congrats! You won!";
-                    userWins++;
+                    _userWins++;
                 }
-                else if (userChoice.Equals("Scissors"))
+                else if (user.Equals("Scissors"))
                 {
                     outcome = "Sorry, You lost!";
-                    comWins++;
+                    _comWins++;
                 }
             }
             else if (com.Equals("Paper"))
@@ -63,17 +62,17 @@ namespace RockPaperScissors
                 if (user.Equals("Rock"))
                 {
                     outcome = "Sorry, You lost!";
-                    comWins++;
+                    _comWins++;
                 }
                 else if (user.Equals("Paper"))
                 {
                     outcome = "You got a draw!";
-                    draws++;
+                    _draws++;
                 }
                 if (user.Equals("Scissors"))
                 {
                     outcome = "Congrats! You won!";
-                    userWins++;
+                    _userWins++;
                 }
             }
             else if (com.Equals("Scissors"))
@@ -81,31 +80,34 @@ namespace RockPaperScissors
                 if (user.Equals("Rock"))
                 {
                     outcome = "Congrats! You won!";
-                    userWins++;
+                    _userWins++;
                 }
                 else if (user.Equals("Paper"))
                 {
                     outcome = "Sorry, You lost!";
-                    comWins++;
+                    _comWins++;
                 }
                 if (user.Equals("Scissors"))
                 {
                     outcome = "You got a draw!";
-                    draws++;
+                    _draws++;
                 }
             }
 
             try
             {
+                // find result images using reflection
                 Assembly assembly = Assembly.GetExecutingAssembly();
-                string directory = "RockPaperScissors.Resources.";
+                var resources = new List<string>(assembly.GetManifestResourceNames());  
 
-                string userImgPath = directory + user.ToLower() + ".jpg";
-                Stream userStream = assembly.GetManifestResourceStream(userImgPath);
+                string userImgFile = user.ToLower() + ".jpg";
+                Stream userStream = assembly.GetManifestResourceStream(
+                    resources.Find(target => target.Contains(userImgFile)));
                 Bitmap userImage = new Bitmap(userStream);
 
-                string comImgPath = directory + com.ToLower() + ".jpg";
-                Stream comStream = assembly.GetManifestResourceStream(comImgPath);
+                string comImgFile = com.ToLower() + ".jpg";
+                Stream comStream = assembly.GetManifestResourceStream(
+                    resources.Find(target => target.Contains(comImgFile)));
                 Bitmap comImage = new Bitmap(comStream);
 
                 userBox.Image = userImage;
@@ -117,9 +119,9 @@ namespace RockPaperScissors
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            lblUser.Text = userWins.ToString();
-            lblCom.Text = comWins.ToString();
-            lblDraw.Text = draws.ToString();
+            lblUser.Text = _userWins.ToString();
+            lblCom.Text = _comWins.ToString();
+            lblDraw.Text = _draws.ToString();
 
             return outcome;
         }
@@ -129,12 +131,12 @@ namespace RockPaperScissors
         /// </summary>
         private void InitializeGame()
         {
-            userWins = 0;
-            comWins = 0;
-            draws = 0;
-            lblUser.Text = userWins.ToString();
-            lblCom.Text = comWins.ToString();
-            lblDraw.Text = draws.ToString();
+            _userWins = 0;
+            _comWins = 0;
+            _draws = 0;
+            lblUser.Text = _userWins.ToString();
+            lblCom.Text = _comWins.ToString();
+            lblDraw.Text = _draws.ToString();
 
             try
             {
@@ -168,7 +170,8 @@ namespace RockPaperScissors
 
             if (makeSelection.DialogResult == DialogResult.OK)
             {
-                userChoice = makeSelection.getSelection;
+                string comChoice = "";
+                string userChoice = makeSelection.getSelection;
                 Random random = new Random();
                 int randomNumber = random.Next(1, 4);
                 switch (randomNumber)
@@ -188,6 +191,7 @@ namespace RockPaperScissors
                 }
 
                 string result = PlayGame(userChoice, comChoice);
+
                 Replay replay = new Replay(result);
                 replay.StartPosition = FormStartPosition.Manual;
                 replay.Location = new Point(800, 175);
