@@ -96,19 +96,11 @@ namespace RockPaperScissors
 
             try
             {
-                // find result images using reflection
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                var resources = new List<string>(assembly.GetManifestResourceNames());  
-
                 string userImgFile = user.ToLower() + ".jpg";
-                Stream userStream = assembly.GetManifestResourceStream(
-                    resources.Find(target => target.Contains(userImgFile)));
-                Bitmap userImage = new Bitmap(userStream);
+                Image userImage = GetImageResource(userImgFile);
 
                 string comImgFile = com.ToLower() + ".jpg";
-                Stream comStream = assembly.GetManifestResourceStream(
-                    resources.Find(target => target.Contains(comImgFile)));
-                Bitmap comImage = new Bitmap(comStream);
+                Image comImage = GetImageResource(comImgFile);
 
                 userBox.Image = userImage;
                 comBox.Image = comImage;
@@ -140,11 +132,8 @@ namespace RockPaperScissors
 
             try
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                string imagePath = "RockPaperScissors.Resources.rpstriangle.jpg";
-                Stream stream = assembly.GetManifestResourceStream(imagePath);
-                Bitmap startImage = new Bitmap(stream);
-
+                string startImageFile = "rpstriangle.jpg";
+                Image startImage = GetImageResource(startImageFile);
                 userBox.Image = startImage;
                 comBox.Image = startImage;
             }
@@ -153,6 +142,22 @@ namespace RockPaperScissors
                 MessageBox.Show(ex.Message, "File Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Returns the Bitmap version of the requested resource image file
+        /// </summary>
+        /// <param name="filename">The filename of the resource image</param>
+        /// <returns>The Image object from the provided filename</returns>
+        private Image GetImageResource(string filename)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            var resources = new List<string>(assembly.GetManifestResourceNames());
+
+            Stream imageStream = assembly.GetManifestResourceStream(
+                resources.Find(target => target.Contains(filename)));
+
+            return new Bitmap(imageStream);
         }
 
         /// <summary>
